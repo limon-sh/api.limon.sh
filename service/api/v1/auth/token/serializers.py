@@ -1,12 +1,13 @@
-from rest_framework import serializers
-from django.db import transaction
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
+from django.db import transaction
+from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from apps.user.models import User
 
 
-class SignUpSerializer(serializers.ModelSerializer):
+class TokenSignUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
@@ -35,3 +36,11 @@ class SignUpSerializer(serializers.ModelSerializer):
     @transaction.atomic()
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
+
+
+class TokenSignInSerializer(TokenObtainPairSerializer):
+    def update(self, instance, validated_data):
+        raise NotImplementedError('`update()` not implemented.')
+
+    def create(self, validated_data):
+        raise NotImplementedError('`create()` not implemented.')

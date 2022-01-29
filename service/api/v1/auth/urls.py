@@ -1,9 +1,11 @@
 from rest_framework import routers
 
-from .views import AuthenticationViewSet
+from api.v1.auth.token.views import TokenAuthenticationViewSet
 
 
 router = routers.SimpleRouter()
-router.register('', AuthenticationViewSet, basename='Authentication')
+router.register(
+    'token', TokenAuthenticationViewSet, basename='TokenAuthentication'
+)
 
 urlpatterns = router.urls

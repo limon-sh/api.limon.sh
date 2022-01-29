@@ -1,13 +1,12 @@
 from rest_framework import viewsets, status, response, decorators, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 
-from apps.user.models import User
-from .serializers import SignUpSerializer
+from apps.auth.token.services import TokenAuthenticationService
+from .serializers import TokenSignUpSerializer, TokenSignInSerializer
 
 
-class AuthenticationViewSet(viewsets.ViewSet):
+class TokenAuthenticationViewSet(viewsets.ViewSet):
     @decorators.action(
         detail=False,
         methods=['post'],
@@ -23,12 +22,13 @@ class AuthenticationViewSet(viewsets.ViewSet):
         Sign up a new user and send confirmation email.
         """
 
-        serializer = SignUpSerializer(data=self.request.data)
+        serializer = TokenSignUpSerializer(data=self.request.data)
         serializer.is_valid(raise_exception=True)
+        user = serializer.save()
 
-        refresh = RefreshToken.for_user(
-            User.objects.create_user(**serializer.validated_data)
-        )
+        refresh = RefreshToken.for_user(user)
+
+        TokenAuthenticationService.sign_up(user)
 
         return response.Response(
             {
@@ -55,13 +55,15 @@ class AuthenticationViewSet(viewsets.ViewSet):
         of those credentials.
         """
 
-        serializer = TokenObtainPairSerializer(data=request.data)
+        serializer = TokenSignInSerializer(data=request.data)
 
         try:
             serializer.is_valid(raise_exception=True)
         except TokenError as e:
             raise InvalidToken(e.args[0])
 
+        TokenAuthenticationService.sign_in()
+
         return response.Response(
-            serializer.validated_data, status=status.HTTP_200_OK
+            serializer.validated_data, status=status.HTTP_201_CREATED
         )
