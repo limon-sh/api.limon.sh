@@ -1,6 +1,5 @@
 from rest_framework import viewsets, status, response, decorators, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 
 from apps.auth.token.services import TokenAuthenticationService
 from .serializers import TokenSignUpSerializer, TokenSignInSerializer
@@ -56,11 +55,7 @@ class TokenAuthenticationViewSet(viewsets.ViewSet):
         """
 
         serializer = TokenSignInSerializer(data=request.data)
-
-        try:
-            serializer.is_valid(raise_exception=True)
-        except TokenError as e:
-            raise InvalidToken(e.args[0])
+        serializer.is_valid(raise_exception=True)
 
         TokenAuthenticationService.sign_in()
 

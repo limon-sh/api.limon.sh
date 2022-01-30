@@ -39,8 +39,4 @@ class TokenSignUpSerializer(serializers.ModelSerializer):
 
 
 class TokenSignInSerializer(TokenObtainPairSerializer):
-    def update(self, instance, validated_data):
-        raise NotImplementedError('`update()` not implemented.')
-
-    def create(self, validated_data):
-        raise NotImplementedError('`create()` not implemented.')
+    pass
