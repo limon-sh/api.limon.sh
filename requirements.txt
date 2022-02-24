@@ -1,5 +1,6 @@
 # Django
 django==4.0.1
+django-extensions==3.1.5
 
 # Database
 psycopg2-binary==2.9.3
@@ -28,3 +29,6 @@ factory-boy==3.2.1
 
 # Codecov integration
 codecov==2.1.12
+
+# HTTP requests
+requests==2.27.1

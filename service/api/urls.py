@@ -6,8 +6,11 @@ from django.conf.urls.static import static
 
 from .v1 import urls as v1_urls
 
+app_name = 'api'
+
+
 urlpatterns = [
-    path('v1/', include(v1_urls)),
+    path('v1/', include(v1_urls), name='v1'),
     path('admin/', admin.site.urls),
     path('healthcheck/', lambda request: HttpResponse(status=200))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

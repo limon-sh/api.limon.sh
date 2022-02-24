@@ -13,7 +13,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'change_me')
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOST', ['*'])
 
-HOST = os.environ.get('HOST', 'http://0.0.0.0:8000')
+HOST = os.environ.get('HOST', 'http://localhost:8000')
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'corsheaders',
     'rest_framework',
+    'django_extensions',
 
     # Project apps
     'apps.user',

@@ -16,7 +16,7 @@ class TokenAuthenticationViewSet(viewsets.ViewSet):
     )
     def sign_up(self, request, *args, **kwargs):
         """
-        Sign up
+        Token sign-up
 
         Sign up a new user and send confirmation email.
         """
@@ -47,7 +47,7 @@ class TokenAuthenticationViewSet(viewsets.ViewSet):
     )
     def sign_in(self, request, *args, **kwargs):
         """
-        Sign in
+        Token sign-in
 
         Takes a set of user credentials and returns an access and
         refresh JSON web token pair to prove the authentication
