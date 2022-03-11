@@ -142,3 +142,10 @@ SWAGGER_SETTINGS = {
         }
     }
 }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://0.0.0.0:8002'
+    }
+}
