@@ -13,6 +13,9 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'change_me')
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOST', ['*'])
 
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
+
 HOST = os.environ.get('HOST', 'http://localhost:8000')
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -140,5 +143,12 @@ SWAGGER_SETTINGS = {
             'name': 'Authorization',
             'in': 'header'
         }
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}'
     }
 }
