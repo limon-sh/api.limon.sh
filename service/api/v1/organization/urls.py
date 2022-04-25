@@ -1,9 +1,12 @@
 from rest_framework import routers
+from .views import OrganizationViewSet, view_cached_data
+from django.urls import include, path
 
-from .views import OrganizationViewSet
 
+#router = routers.SimpleRouter()
+#router.register('', OrganizationViewSet)
 
-router = routers.SimpleRouter()
-router.register('', OrganizationViewSet)
-
-urlpatterns = router.urls
+#urlpatterns = router.urls
+urlpatterns = [
+    path('testing/', view_cached_data),
+]

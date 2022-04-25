@@ -2,6 +2,10 @@ from rest_framework import viewsets
 
 from apps.organization.models import Organization
 from .serializers import OrganizationSerializer
+from rest_framework import status
+from django.core.cache import cache
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 
 class OrganizationViewSet(viewsets.ModelViewSet):
@@ -45,3 +49,14 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     ).prefetch_related(
         'members__user'
     )
+
+@api_view(['GET'])
+def view_cached_data(request):
+    if 'data' in cache:
+        result = cache.get('data')
+        return Response(result, status=status.HTTP_201_CREATED)
+    else:
+        data = Organization.objects.all()
+        serializer = OrganizationSerializer(data, many=True)
+        cache.set('data', serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
