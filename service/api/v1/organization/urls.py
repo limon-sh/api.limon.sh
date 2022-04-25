@@ -5,3 +5,4 @@ from django.urls import include, path
 
 router = routers.SimpleRouter()
 router.register('', OrganizationViewSet)
+urlpatterns = router.urls
