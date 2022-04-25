@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from .models import User, Member, Team
 
 
-# admin.site.unregister(Group)
+admin.site.unregister(Group)
 
 
 @admin.register(User)
