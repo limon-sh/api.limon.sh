@@ -1,9 +1,11 @@
 from libs.models import BaseModel
 from apps.user.models import Member
 from django.db import models
+from libs.mixins import ModelValidateMixin
 
 
 class Project(BaseModel):
+    validator = ModelValidateMixin()
     name = models.CharField(max_length=32)
     teams = models.ManyToManyField(
         to='user.Team',
@@ -11,7 +13,8 @@ class Project(BaseModel):
     )
     organization = models.ForeignKey(
         to='organization.Organization',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        validators=validator.validate()
     )
 
     def __str__(self):
