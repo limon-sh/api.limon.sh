@@ -36,7 +36,7 @@ class ModelValidateMixin:
         return _errors
 
 
-class ModelMixin:
+class SlugifyMixin:
 
     def save(self, *args, **kwargs):
         if not self.slug or self.slug == slugify(self.name):

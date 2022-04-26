@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.template.defaultfilters import slugify
 from libs.models import BaseModel, PersonMixin
-from libs.mixins import ModelMixin
+from libs.mixins import SlugifyMixin
 
 
 class User(BaseModel, PersonMixin, AbstractBaseUser, PermissionsMixin):
@@ -124,7 +124,7 @@ class Member(BaseModel):
         return f'{self.user.email} ({self.role})'
 
 
-class Team(BaseModel, ModelMixin):
+class Team(BaseModel, SlugifyMixin):
     name = models.CharField(max_length=32)
     slug = models.SlugField(max_length=32)
     members = models.ManyToManyField(

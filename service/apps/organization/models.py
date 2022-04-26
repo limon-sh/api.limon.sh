@@ -1,11 +1,11 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-from libs.mixins import ModelMixin
+from libs.mixins import SlugifyMixin
 from libs.models import BaseModel
 from apps.user.models import Member
 
 
-class Organization(BaseModel, ModelMixin):
+class Organization(BaseModel, SlugifyMixin):
     """
     Organization model.
 
