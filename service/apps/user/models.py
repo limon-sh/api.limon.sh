@@ -2,7 +2,7 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
+from django.template.defaultfilters import slugify
 from libs.models import BaseModel, PersonMixin
 
 
@@ -125,6 +125,7 @@ class Member(BaseModel):
 
 class Team(BaseModel):
     name = models.CharField(max_length=32)
+    slug = models.SlugField(max_length=32)
     members = models.ManyToManyField(
         to='user.Member',
         through='user.TeamMember'
@@ -140,6 +141,12 @@ class Team(BaseModel):
     @property
     def members_count(self) -> int:
         return self.members.count()
+
+    def save(self, *args, **kwargs):
+        if not self.slug or self.slug == slugify(self.name):
+            self.slug = slugify(self.name)
+
+        super().save(*args, **kwargs)
 
 
 class TeamMember(BaseModel):

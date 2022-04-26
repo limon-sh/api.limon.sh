@@ -2,11 +2,13 @@ from libs.models import BaseModel
 from apps.user.models import Member
 from django.db import models
 from libs.mixins import ModelValidateMixin
+from django.template.defaultfilters import slugify
 
 
 class Project(BaseModel):
     validator = ModelValidateMixin()
     name = models.CharField(max_length=32)
+    slug = models.SlugField(max_length=32)
     teams = models.ManyToManyField(
         to='user.Team',
         through='project.ProjectTeam'
@@ -19,6 +21,12 @@ class Project(BaseModel):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug or self.slug == slugify(self.name):
+            self.slug = slugify(self.name)
+
+        super().save(*args, **kwargs)
 
 
 class ProjectTeam(BaseModel):
