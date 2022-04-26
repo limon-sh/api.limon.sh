@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.template.defaultfilters import slugify
 
 
 class ModelValidateMixin:
@@ -33,3 +34,12 @@ class ModelValidateMixin:
             raise ValidationError(_errors)
 
         return _errors
+
+
+class ModelMixin:
+
+    def save(self, *args, **kwargs):
+        if not self.slug or self.slug == slugify(self.name):
+            self.slug = slugify(self.name)
+
+            super().save(*args, **kwargs)

@@ -1,11 +1,11 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-
+from libs.mixins import ModelMixin
 from libs.models import BaseModel
 from apps.user.models import Member
 
 
-class Organization(BaseModel):
+class Organization(BaseModel, ModelMixin):
     """
     Organization model.
 
@@ -26,12 +26,6 @@ class Organization(BaseModel):
 
     def __str__(self):
         return self.name
-
-    def save(self, *args, **kwargs):
-        if not self.slug or self.slug == slugify(self.name):
-            self.slug = slugify(self.name)
-
-        super().save(*args, **kwargs)
 
     @property
     def members_count(self) -> int:
