@@ -121,3 +121,33 @@ class Member(BaseModel):
 
     def __str__(self):
         return f'{self.user.email} ({self.role})'
+
+
+class Team(BaseModel):
+    name = models.CharField(max_length=32)
+    members = models.ManyToManyField(
+        to='user.Member',
+        through='user.TeamMember'
+    )
+    organization = models.ForeignKey(
+        to='organization.Organization',
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def members_count(self) -> int:
+        return self.members.count()
+
+
+class TeamMember(BaseModel):
+    team = models.ForeignKey(
+        to='user.Team',
+        on_delete=models.CASCADE
+    )
+    member = models.ForeignKey(
+        to='user.Member',
+        on_delete=models.CASCADE
+    )

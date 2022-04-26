@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 
-from .models import User, Member
+from .models import User, Member, Team
 
 
 admin.site.unregister(Group)
@@ -30,7 +30,8 @@ class UserAdmin(admin.ModelAdmin):
                 'is_active',
                 'is_superuser',
                 'is_staff',
-                'created_at'
+                'created_at',
+                'groups'
             ),
         }),
     )
@@ -80,3 +81,21 @@ class MemberAdmin(admin.ModelAdmin):
         return obj.user.email
 
     user_email.short_description = 'User email'
+
+
+class TeamMemberInline(admin.StackedInline):
+    extra = 0
+    model = Team.members.through
+
+
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'created_at',
+        'members_count'
+    )
+    inlines = (
+        TeamMemberInline,
+    )
+
