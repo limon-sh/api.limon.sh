@@ -126,7 +126,7 @@ class Member(BaseModel):
 
 class Team(BaseModel, SlugifyMixin):
     name = models.CharField(max_length=32)
-    slug = models.SlugField(max_length=32)
+    slug = models.SlugField(max_length=32, null=True)
     members = models.ManyToManyField(
         to='user.Member',
         through='user.TeamMember'

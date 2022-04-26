@@ -17,7 +17,8 @@ class Organization(BaseModel, SlugifyMixin):
         max_length=32
     )
     slug = models.SlugField(
-        max_length=32
+        max_length=32,
+        null=True
     )
     members = models.ManyToManyField(
         to='user.Member',
