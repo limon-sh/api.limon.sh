@@ -2,8 +2,9 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
+from django.template.defaultfilters import slugify
 from libs.models import BaseModel, PersonMixin
+from libs.mixins import SlugifyMixin
 
 
 class User(BaseModel, PersonMixin, AbstractBaseUser, PermissionsMixin):
@@ -123,8 +124,9 @@ class Member(BaseModel):
         return f'{self.user.email} ({self.role})'
 
 
-class Team(BaseModel):
+class Team(BaseModel, SlugifyMixin):
     name = models.CharField(max_length=32)
+    slug = models.SlugField(max_length=32, null=True)
     members = models.ManyToManyField(
         to='user.Member',
         through='user.TeamMember'

@@ -1,12 +1,14 @@
 from libs.models import BaseModel
 from apps.user.models import Member
 from django.db import models
-from libs.mixins import ModelValidateMixin
+from libs.mixins import ModelValidateMixin, SlugifyMixin
+from django.template.defaultfilters import slugify
 
 
-class Project(BaseModel):
+class Project(BaseModel, SlugifyMixin):
     validator = ModelValidateMixin()
     name = models.CharField(max_length=32)
+    slug = models.SlugField(max_length=32, null=True)
     teams = models.ManyToManyField(
         to='user.Team',
         through='project.ProjectTeam'

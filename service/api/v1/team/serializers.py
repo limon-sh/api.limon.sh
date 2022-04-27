@@ -1,10 +1,8 @@
 from rest_framework import serializers
-
-from apps.user.models import Member
-from apps.organization.models import Organization
+from apps.user.models import Member, Team
 
 
-class OrganizationMemberSerializer(serializers.ModelSerializer):
+class TeamMemberSerializer(serializers.ModelSerializer):
     name = serializers.CharField(
         source='user.name',
         read_only=True
@@ -26,14 +24,14 @@ class OrganizationMemberSerializer(serializers.ModelSerializer):
         }
 
 
-class OrganizationSerializer(serializers.ModelSerializer):
-    members = OrganizationMemberSerializer(
+class TeamSerializer(serializers.ModelSerializer):
+    members = TeamMemberSerializer(
         many=True,
         read_only=True
     )
 
     class Meta:
-        model = Organization
+        model = Team
         fields = (
             'name',
             'slug',
