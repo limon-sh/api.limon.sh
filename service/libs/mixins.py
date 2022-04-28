@@ -39,7 +39,6 @@ class ModelValidateMixin:
 class SlugifyMixin:
 
     def save(self, *args, **kwargs):
-        if not self.slug or self.slug == slugify(self.name):
-            self.slug = slugify(self.name)
+        self.slug = slugify(self.name)
 
-            super().save(*args, **kwargs)
+        super().save(*args, **kwargs)

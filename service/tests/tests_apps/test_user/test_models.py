@@ -1,5 +1,6 @@
 import pytest
 from django.core.exceptions import ValidationError
+from django.template.defaultfilters import slugify
 
 from apps.user.models import User
 
@@ -59,3 +60,16 @@ class TestUserManager:
 class TestMemberModel:
     def test_repr(self, member):
         assert f'{member.user.email} ({member.role})' == str(member)
+
+
+@pytest.mark.django_db
+class TestTeamModel:
+    def test_repr(self, team_factory):
+        team = team_factory()
+        team.slug = slugify(team.name)
+        assert team.name == str(team)
+
+    def test_create_default_slug(self, team_factory):
+        team = team_factory()
+        team.slug = slugify(team.name)
+        assert team.slug == slugify(team.name)

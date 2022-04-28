@@ -1,8 +1,6 @@
 from libs.models import BaseModel
-from apps.user.models import Member
 from django.db import models
 from libs.mixins import ModelValidateMixin, SlugifyMixin
-from django.template.defaultfilters import slugify
 
 
 class Project(BaseModel, SlugifyMixin):
