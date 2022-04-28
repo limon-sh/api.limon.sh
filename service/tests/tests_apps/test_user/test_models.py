@@ -64,9 +64,7 @@ class TestMemberModel:
 
 @pytest.mark.django_db
 class TestTeamModel:
-    def test_repr(self, team_factory):
-        team = team_factory()
-        team.slug = slugify(team.name)
+    def test_repr(self, team):
         assert team.name == str(team)
 
     def test_create_default_slug(self, team_factory):

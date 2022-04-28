@@ -5,9 +5,7 @@ from django.template.defaultfilters import slugify
 @pytest.mark.django_db
 class TestOrganizationModel:
 
-    def test_repr(self, organization_factory):
-        organization = organization_factory()
-        organization.slug = slugify(organization.name)
+    def test_repr(self, organization):
         assert organization.name == str(organization)
 
     def test_create_default_slug(self, organization_factory):
