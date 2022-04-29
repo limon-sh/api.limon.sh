@@ -1,6 +1,5 @@
 import factory
-
-from apps.user.models import User, Member
+from apps.user.models import User, Member, Team, TeamMember
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -32,3 +31,21 @@ class MemberFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Member
+
+
+class TeamFactory(factory.django.DjangoModelFactory):
+    uuid = factory.Faker('uuid4')
+    name = factory.Faker('word')
+    slug = 'slug'
+    organization = factory.SubFactory('tests.factories.organization.OrganizationFactory')
+
+    class Meta:
+        model = Team
+
+
+class TeamMemberFactory(factory.django.DjangoModelFactory):
+    team = factory.SubFactory(TeamFactory)
+    member = factory.SubFactory(MemberFactory)
+
+    class Meta:
+        model = TeamMember
