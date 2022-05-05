@@ -35,7 +35,8 @@ class TeamSerializer(serializers.ModelSerializer):
         fields = (
             'name',
             'slug',
-            'members'
+            'members',
+            'organization'
         )
         extra_kwargs = {
             'name': {'required': False},

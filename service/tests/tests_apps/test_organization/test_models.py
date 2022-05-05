@@ -13,11 +13,6 @@ class TestOrganizationModel:
         organization.slug = slugify(organization.name)
         assert organization.slug == slugify(organization.name)
 
-    def test_create_slug_if_was_changed(self, organization_factory):
-        organization = organization_factory(slug='test-slug')
-
-        assert organization.slug != slugify(organization.name)
-
     def test_invite_new_member(self, organization, member):
         organization.invite(member)
 
