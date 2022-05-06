@@ -1,10 +1,11 @@
 from django.db import models
-from libs.mixins import SlugifyMixin
+from django.utils.text import slugify
+
 from libs.models import BaseModel
 from apps.user.models import Member
 
 
-class Organization(BaseModel, SlugifyMixin):
+class Organization(BaseModel):
     """
     Organization model.
 
@@ -39,6 +40,10 @@ class Organization(BaseModel, SlugifyMixin):
             organization_id=self.pk
         )
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
 
 class OrganizationMember(BaseModel):
     """
@@ -57,3 +62,4 @@ class OrganizationMember(BaseModel):
         to='user.Member',
         on_delete=models.CASCADE
     )
+

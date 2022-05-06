@@ -1,4 +1,5 @@
 import factory
+from django.utils.text import slugify
 
 from apps.organization.models import Organization, OrganizationMember
 
@@ -6,7 +7,7 @@ from apps.organization.models import Organization, OrganizationMember
 class OrganizationFactory(factory.django.DjangoModelFactory):
     uuid = factory.Faker('uuid4')
     name = factory.Faker('word')
-    slug = 'slug'
+    slug = slugify(name)
 
     class Meta:
         model = Organization

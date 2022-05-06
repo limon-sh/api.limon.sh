@@ -9,6 +9,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = (
             'name',
             'slug',
+            'organization'
         )
         extra_kwargs = {
             'name': {'required': False},

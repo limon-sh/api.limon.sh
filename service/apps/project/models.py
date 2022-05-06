@@ -1,10 +1,10 @@
+from django.utils.text import slugify
+
 from libs.models import BaseModel
 from django.db import models
-from libs.mixins import ModelValidateMixin, SlugifyMixin
 
 
-class Project(BaseModel, SlugifyMixin):
-    validator = ModelValidateMixin()
+class Project(BaseModel):
     name = models.CharField(max_length=32)
     slug = models.SlugField(max_length=32, null=True)
     teams = models.ManyToManyField(
@@ -13,12 +13,15 @@ class Project(BaseModel, SlugifyMixin):
     )
     organization = models.ForeignKey(
         to='organization.Organization',
-        on_delete=models.CASCADE,
-        validators=validator.validate()
+        on_delete=models.CASCADE
     )
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 
 class ProjectTeam(BaseModel):

@@ -71,3 +71,8 @@ class TestTeamModel:
         team = team_factory()
         team.slug = slugify(team.name)
         assert team.slug == slugify(team.name)
+
+    def test_team_member(self, team, member_factory):
+        team.invite(member_factory())
+        team.invite(member_factory())
+        assert team.members_count == 2
