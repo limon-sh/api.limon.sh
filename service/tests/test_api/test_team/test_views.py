@@ -9,7 +9,9 @@ from tests.factories.user import TeamFactory
 class TestTeamApi:
 
     def test_team(self, api_client, organization):
-        assert api_client.get(f'/v1/organizations/{organization.slug}/team/').status_code == status.HTTP_200_OK
+        assert api_client.get(
+            f'/v1/organizations/{organization.slug}/team/'
+        ).status_code == status.HTTP_200_OK
 
     def test_create_new_team(self, api_client, organization):
         assert api_client.post(

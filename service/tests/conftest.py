@@ -19,10 +19,10 @@ register(OrganizationFactory)
 register(ProjectFactory)
 
 
-@pytest.fixture(scope="class")
-def api_client():
+@pytest.fixture(scope="function")
+def api_client(user):
     client = APIClient()
-    user = UserFactory.build()
     client.force_authenticate(user=user)
-    return client
+    yield client
+    client.logout()
 

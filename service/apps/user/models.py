@@ -142,6 +142,14 @@ class Team(BaseModel):
     def members_count(self) -> int:
         return self.members.count()
 
+    def invite(self, member: Member):
+        """Invite member for current organization."""
+
+        TeamMember.objects.get_or_create(
+            member_id=member.pk,
+            team_id=self.pk
+        )
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)

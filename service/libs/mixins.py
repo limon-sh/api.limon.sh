@@ -6,10 +6,6 @@
 #     Validates model fields and returns existing errors
 #     """
 #
-#     def save(self, *args, **kwargs):
-#         super().full_clean()
-#         super().save(*args, **kwargs)
-#
 #     def clean(self, *args, **kwargs):
 #         self.validate(raise_exceptions=True)
 #         super().clean(*args, **kwargs)
@@ -33,4 +29,3 @@
 #             raise ValidationError(_errors)
 #
 #         return _errors
-#

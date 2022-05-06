@@ -9,7 +9,9 @@ from tests.factories.organization import OrganizationFactory
 class TestOrganizationsApi:
 
     def test_organizations(self, api_client):
-        assert api_client.get('/v1/organizations/').status_code == status.HTTP_200_OK
+        assert api_client.get(
+            '/v1/organizations/'
+        ).status_code == status.HTTP_200_OK
 
     def test_create_new_organization(self, api_client):
         assert api_client.post(
