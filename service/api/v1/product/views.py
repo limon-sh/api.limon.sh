@@ -1,57 +1,57 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
+from apps.organization.models import Organization
 from apps.product.models import Product
-from apps.project.models import Project
-from .serializers import ProjectSerializer
+from .serializers import ProductSerializer
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
+class ProductViewSet(viewsets.ModelViewSet):
     """
     list:
-        project list
+        product list
 
-        List of projects.
+        List of products.
 
     retrieve:
-        project detail
+        product detail
 
-        Details of project.
+        Details of product.
 
     create:
-        project create
+        product create
 
-        Create a new project.
+        Create a new product.
 
     update:
-        project update
+        product update
 
-        Update a project.
+        Update a product.
 
     partial_update:
-        project partial update
+        product partial update
 
-        Update and project partially.
+        Update a product partially.
 
     destroy:
-        project destroy
+        product destroy
 
-        Destroy a project.
+        Destroy a product.
     """
 
     lookup_field = 'slug'
     lookup_url_kwarg = 'slug'
-    serializer_class = ProjectSerializer
-    queryset = Project.objects.prefetch_related(
-        'product'
+    serializer_class = ProductSerializer
+    queryset = Product.objects.prefetch_related(
+        'organization'
     )
 
     def create(self, request, *args, **kwargs):
-        product = Product.objects.get(slug=kwargs['product_slug'])
+        organization = Organization.objects.get(slug=kwargs['organization_slug'])
 
         serializer = self.get_serializer(data={
             'name': request.data['name'],
-            'product': product.uuid
+            'organization': organization.uuid
         })
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -59,13 +59,13 @@ class ProjectViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request, *args, **kwargs):
-        product = Product.objects.get(slug=kwargs['product_slug'])
+        organization = Organization.objects.get(slug=kwargs['organization_slug'])
 
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data={
             'name': request.data['name'],
-            'product': product.uuid}, partial=partial)
+            'organization': organization.uuid}, partial=partial)
 
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
