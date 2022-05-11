@@ -29,6 +29,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, STATIC_DIR)
 MEDIA_DIR = 'media'
 MEDIA_URL = f'/{MEDIA_DIR}/'
 MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_DIR)
+UPLOAD_AVATARS_TO = 'images/avatars/'
+IMAGE_UPLOAD_MAX_SIZE = 5 * 1024 * 1024
+
+ALLOWED_IMAGE_EXTENSIONS = (
+    ".jpeg",
+    ".jpg",
+    ".png"
+)
 
 USE_TZ = True
 TIME_ZONE = 'UTC'

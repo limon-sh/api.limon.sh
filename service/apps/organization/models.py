@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils.text import slugify
 
+from settings import base as settings
+from libs.validators import ValidateFileSize, ValidateFileExtension
+
 from libs.models import BaseModel
 from apps.user.models import Member
 
@@ -23,6 +26,12 @@ class Organization(BaseModel):
     members = models.ManyToManyField(
         to='user.Member',
         through='organization.OrganizationMember'
+    )
+
+    logo = models.ImageField(
+        upload_to=settings.UPLOAD_AVATARS_TO,
+        validators=[ValidateFileSize(settings.IMAGE_UPLOAD_MAX_SIZE),
+                    ValidateFileExtension(settings.ALLOWED_IMAGE_EXTENSIONS)]
     )
 
     def __str__(self):

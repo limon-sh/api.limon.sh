@@ -37,7 +37,8 @@ class OrganizationSerializer(serializers.ModelSerializer):
         fields = (
             'name',
             'slug',
-            'members'
+            'members',
+            'logo'
         )
         extra_kwargs = {
             'name': {'required': False},

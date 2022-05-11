@@ -10,7 +10,8 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = (
             'name',
             'slug',
-            'organization'
+            'organization',
+            'logo'
         )
         extra_kwargs = {
             'name': {'required': False},
