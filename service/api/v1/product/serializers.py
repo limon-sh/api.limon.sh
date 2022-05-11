@@ -1,15 +1,16 @@
 from rest_framework import serializers
-from apps.project.models import Project
+
+from apps.product.models import Product
 
 
-class ProjectSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Project
+        model = Product
         fields = (
             'name',
             'slug',
-            'product'
+            'organization'
         )
         extra_kwargs = {
             'name': {'required': False},

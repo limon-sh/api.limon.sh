@@ -11,8 +11,8 @@ class Project(BaseModel):
         to='user.Team',
         through='project.ProjectTeam'
     )
-    organization = models.ForeignKey(
-        to='organization.Organization',
+    product = models.ForeignKey(
+        to='product.Product',
         on_delete=models.CASCADE
     )
 

@@ -8,7 +8,7 @@ class ProjectFactory(factory.django.DjangoModelFactory):
     uuid = factory.Faker('uuid4')
     name = factory.Faker('word')
     slug = slugify(name)
-    organization = factory.SubFactory('tests.factories.organization.OrganizationFactory')
+    product = factory.SubFactory('tests.factories.product.ProductFactory')
 
     class Meta:
         model = Project
