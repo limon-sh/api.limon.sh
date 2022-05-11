@@ -44,7 +44,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.prefetch_related(
         'organization'
-    )
+    ).order_by('name')
 
     def create(self, request, *args, **kwargs):
         organization = Organization.objects.get(slug=kwargs['organization_slug'])

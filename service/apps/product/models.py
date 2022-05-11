@@ -5,10 +5,10 @@ from django.db import models
 
 
 class Product(BaseModel):
-    # do logo field
+    # TODO: logo field
 
-    name = models.CharField(max_length=32)
-    slug = models.SlugField(max_length=32)
+    name = models.CharField(max_length=64)
+    slug = models.SlugField(max_length=64)
     organization = models.ForeignKey(
         to='organization.Organization',
         on_delete=models.CASCADE
