@@ -51,7 +51,8 @@ class ProductViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(data={
             'name': request.data['name'],
-            'organization': organization.uuid
+            'organization': organization.uuid,
+            'logo': request.data['logo']
         })
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -65,7 +66,9 @@ class ProductViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data={
             'name': request.data['name'],
-            'organization': organization.uuid}, partial=partial)
+            'organization': organization.uuid,
+            'logo': request.data['logo']
+        }, partial=partial)
 
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
