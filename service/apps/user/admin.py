@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 
-from .models import User, Member, Team
+from .models import User, Member
 
 
 admin.site.unregister(Group)
@@ -81,21 +81,3 @@ class MemberAdmin(admin.ModelAdmin):
         return obj.user.email
 
     user_email.short_description = 'User email'
-
-
-class TeamMemberInline(admin.StackedInline):
-    extra = 0
-    model = Team.members.through
-
-
-@admin.register(Team)
-class TeamAdmin(admin.ModelAdmin):
-    list_display = (
-        'name',
-        'created_at',
-        'members_count'
-    )
-    inlines = (
-        TeamMemberInline,
-    )
-

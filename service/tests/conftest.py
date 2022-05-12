@@ -2,7 +2,7 @@ import pytest
 from pytest_factoryboy import register
 from rest_framework.test import APIClient
 
-from tests.factories.user import UserFactory, MemberFactory, TeamFactory
+from tests.factories.user import UserFactory, MemberFactory
 from tests.factories.organization import OrganizationFactory
 from tests.factories.project import ProjectFactory
 from tests.factories.product import ProductFactory
@@ -11,7 +11,6 @@ from tests.factories.product import ProductFactory
 # User app
 register(UserFactory)
 register(MemberFactory)
-register(TeamFactory)
 
 # Organization app
 register(OrganizationFactory)

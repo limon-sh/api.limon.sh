@@ -1,7 +1,7 @@
 import factory
 from django.utils.text import slugify
 
-from apps.project.models import Project, ProjectTeam
+from apps.project.models import Project
 
 
 class ProjectFactory(factory.django.DjangoModelFactory):
@@ -12,11 +12,3 @@ class ProjectFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Project
-
-
-class ProjectTeamFactory(factory.django.DjangoModelFactory):
-    project = factory.SubFactory(ProjectFactory)
-    team = factory.SubFactory('tests.factories.user.TeamFactory')
-
-    class Meta:
-        model = ProjectTeam

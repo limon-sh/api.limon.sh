@@ -1,4 +1,7 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.response import Response
+
 from apps.organization.models import Organization
 from .serializers import OrganizationSerializer
 
@@ -39,6 +42,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     lookup_field = 'slug'
     lookup_url_kwarg = 'slug'
     serializer_class = OrganizationSerializer
+    parser_classes = (MultiPartParser, FormParser)
     queryset = Organization.objects.prefetch_related(
         'members'
     ).prefetch_related(
