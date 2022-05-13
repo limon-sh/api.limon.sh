@@ -29,7 +29,7 @@ class Organization(BaseModel):
     )
 
     logo = models.ImageField(
-        upload_to=settings.UPLOAD_AVATARS_TO,
+        upload_to=settings.DEFAULT_FILE_STORAGE,
         validators=[ValidateFileSize(settings.IMAGE_UPLOAD_MAX_SIZE),
                     ValidateFileExtension(settings.ALLOWED_IMAGE_EXTENSIONS)],
         null=True,
