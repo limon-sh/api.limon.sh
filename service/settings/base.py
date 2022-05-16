@@ -18,6 +18,8 @@ REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
 
 HOST = os.environ.get('HOST', 'http://localhost:8000')
 
+DEFAULT_FILE_STORAGE = "libs.storages.LocalMediaStorage"
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
