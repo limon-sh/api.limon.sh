@@ -6,10 +6,11 @@ from libs.validators import ValidateFileSize, ValidateFileExtension
 
 class ProductSerializer(serializers.ModelSerializer):
 
-    logo = serializers.ImageField(required=False,
-                                  allow_null=True,
-                                  validators=[ValidateFileSize(settings.IMAGE_UPLOAD_MAX_SIZE),
-                                              ValidateFileExtension(settings.ALLOWED_IMAGE_EXTENSIONS)])
+    logo = serializers.ImageField(
+        required=False,
+        allow_null=True,
+        validators=[ValidateFileSize(settings.IMAGE_UPLOAD_MAX_SIZE),
+                    ValidateFileExtension(settings.ALLOWED_IMAGE_EXTENSIONS)])
 
     class Meta:
         model = Product
