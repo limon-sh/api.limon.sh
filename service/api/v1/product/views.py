@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from apps.organization.models import Organization
 from apps.product.models import Product
 from .serializers import ProductSerializer
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -42,17 +43,17 @@ class ProductViewSet(viewsets.ModelViewSet):
     lookup_field = 'slug'
     lookup_url_kwarg = 'slug'
     serializer_class = ProductSerializer
+    parser_classes = (MultiPartParser, FormParser)
     queryset = Product.objects.prefetch_related(
         'organization'
     ).order_by('name')
 
     def create(self, request, *args, **kwargs):
         organization = Organization.objects.get(slug=kwargs['organization_slug'])
-
         serializer = self.get_serializer(data={
-            'name': request.data['name'],
+            'name': request.data.get('name'),
             'organization': organization.uuid,
-            'logo': request.data['logo']
+            'logo': request.data.get('logo')
         })
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -65,9 +66,9 @@ class ProductViewSet(viewsets.ModelViewSet):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data={
-            'name': request.data['name'],
+            'name': request.data.get('name'),
             'organization': organization.uuid,
-            'logo': request.data['logo']
+            'logo': request.data.get('logo')
         }, partial=partial)
 
         serializer.is_valid(raise_exception=True)

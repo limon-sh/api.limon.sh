@@ -31,7 +31,9 @@ class Organization(BaseModel):
     logo = models.ImageField(
         upload_to=settings.UPLOAD_AVATARS_TO,
         validators=[ValidateFileSize(settings.IMAGE_UPLOAD_MAX_SIZE),
-                    ValidateFileExtension(settings.ALLOWED_IMAGE_EXTENSIONS)]
+                    ValidateFileExtension(settings.ALLOWED_IMAGE_EXTENSIONS)],
+        null=True,
+        blank=True
     )
 
     def __str__(self):

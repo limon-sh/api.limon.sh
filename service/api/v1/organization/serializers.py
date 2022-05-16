@@ -1,7 +1,8 @@
 from rest_framework import serializers
-
+from settings import base as settings
 from apps.user.models import Member
 from apps.organization.models import Organization
+from libs.validators import ValidateFileSize, ValidateFileExtension
 
 
 class OrganizationMemberSerializer(serializers.ModelSerializer):
@@ -31,6 +32,12 @@ class OrganizationSerializer(serializers.ModelSerializer):
         many=True,
         read_only=True
     )
+
+    logo = serializers.ImageField(
+        required=False,
+        allow_null=True,
+        validators=[ValidateFileSize(settings.IMAGE_UPLOAD_MAX_SIZE),
+                    ValidateFileExtension(settings.ALLOWED_IMAGE_EXTENSIONS)])
 
     class Meta:
         model = Organization

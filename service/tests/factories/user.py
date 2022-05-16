@@ -1,7 +1,7 @@
 import factory
 from django.utils.text import slugify
 
-from apps.user.models import User, Member, Team, TeamMember
+from apps.user.models import User, Member
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -33,21 +33,3 @@ class MemberFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Member
-
-
-class TeamFactory(factory.django.DjangoModelFactory):
-    uuid = factory.Faker('uuid4')
-    name = factory.Faker('word')
-    slug = slugify(name)
-    organization = factory.SubFactory('tests.factories.organization.OrganizationFactory')
-
-    class Meta:
-        model = Team
-
-
-class TeamMemberFactory(factory.django.DjangoModelFactory):
-    team = factory.SubFactory(TeamFactory)
-    member = factory.SubFactory(MemberFactory)
-
-    class Meta:
-        model = TeamMember
