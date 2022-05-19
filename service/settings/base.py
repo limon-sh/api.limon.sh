@@ -66,7 +66,10 @@ INSTALLED_APPS = [
     'apps.user',
     'apps.organization',
     'apps.project',
-    'apps.product'
+    'apps.product',
+    'apps.machine',
+    'apps.cluster'
+
 ]
 
 MIDDLEWARE = [
