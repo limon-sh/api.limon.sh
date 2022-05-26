@@ -35,6 +35,9 @@ class GoogleAuthenticationService:
             pass
 
         user_info = cls.get_user_info(access_token=access_token)
+
+        # TODO: Register user and obtain token pairs
+
         # user_info = {
         #     'sub': '110887550190054463895',
         #     'name': 'Andrey Kliatsko',

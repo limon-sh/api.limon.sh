@@ -3,6 +3,7 @@ import pytest
 from rest_framework import status
 
 
+@pytest.mark.skip
 @pytest.mark.django_db
 class TestAuthenticationViewSet:
     def test_sign_up_response_status(self, client, user_factory):

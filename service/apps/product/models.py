@@ -1,8 +1,7 @@
+from django.db import models
 from django.utils.text import slugify
-from libs.validators import ValidateFileSize, ValidateFileExtension
 
 from libs.models import BaseModel
-from django.db import models
 from settings import base as settings
 
 
@@ -17,8 +16,6 @@ class Product(BaseModel):
 
     logo = models.ImageField(
         upload_to=settings.DEFAULT_FILE_STORAGE,
-        validators=[ValidateFileSize(settings.IMAGE_UPLOAD_MAX_SIZE),
-                    ValidateFileExtension(settings.ALLOWED_IMAGE_EXTENSIONS)],
         null=True,
         blank=True
     )

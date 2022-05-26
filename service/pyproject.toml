@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "api.limon.sh"
+version = "0.1.0"
+description = "API service for limon.sh"
+authors = [
+    "Stanchik Fedor <radiatorow@gmail.com>",
+    "Kliatsko Andrey <andrey.kliatsko@limon.sh"
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Django = "^4.0.4"
+psycopg2-binary = "^2.9.3"
+django-redis = "^5.2.0"
+django-cors-headers = "^3.12.0"
+djangorestframework = "^3.13.1"
+djangorestframework-simplejwt = "^5.2.0"
+drf-nested-routers = "^0.93.4"
+drf-yasg = "^1.20.0"
+whitenoise = "^6.1.0"
+gunicorn = "^20.1.0"
+requests = "^2.27.1"
+Pillow = "^9.1.1"
+
+[tool.poetry.dev-dependencies]
+django-extensions = "^3.1.5"
+flake8 = "^4.0.1"
+pytest = "^7.1.2"
+pytest-cov = "^3.0.0"
+pytest-django = "^4.5.2"
+pytest-factoryboy = "^2.3.1"
+factory-boy = "^3.2.1"
+codecov = "^2.1.12"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

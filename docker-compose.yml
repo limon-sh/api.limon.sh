@@ -7,7 +7,9 @@ services:
     container_name: backend
     build: .
     user: appuser
-    env_file: .env
+    env_file:
+      - .env
+      - .env.local
     ports:
       - 8000:80
     volumes:
@@ -21,7 +23,15 @@ services:
     image: postgres:14.1-alpine
     hostname: $${POSTGRES_HOST}
     container_name: postgresql
-    env_file: .env
+    env_file:
+      - .env
+      - .env.local
+    environment:
+      - POSTGRES_DB=api_limon_sh_db
+      - POSTGRES_HOST=postgresql
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
     ports:
       - 8001:5432
     volumes:
@@ -32,7 +42,12 @@ services:
     image: redis:6.2-alpine
     hostname: $${REDIS_HOST}
     container_name: redis
-    env_file: .env
+    env_file:
+      - .env
+      - .env.local
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     ports:
       - 8002:6379
 

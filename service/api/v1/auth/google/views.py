@@ -25,7 +25,7 @@ class GoogleAuthenticationViewSet(viewsets.ViewSet):
 
         token = GoogleAuthenticationService.sign_up(request)
 
-        return redirect(f"http://localhost:8080/sign-up?{urlencode({'token': token})}")
+        return redirect(f"http://localhost:8081/sign-up?{urlencode({'token': token})}")
 
     @decorators.action(
         detail=False,
@@ -47,4 +47,4 @@ class GoogleAuthenticationViewSet(viewsets.ViewSet):
 
         token = GoogleAuthenticationService.sign_in(request)
 
-        return redirect(f'http://localhost:8080/sign-in?access_token={token}')
+        return redirect(f'http://localhost:8081/sign-in?access_token={token}')

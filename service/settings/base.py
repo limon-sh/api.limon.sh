@@ -13,7 +13,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'change_me')
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOST', ['*'])
 
-REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+REDIS_HOST = os.environ.get('REDIS_HOST', 'redis')
 REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
 
 HOST = os.environ.get('HOST', 'http://localhost:8000')
@@ -88,11 +88,11 @@ CONN_MAX_AGE = 60
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['POSTGRES_DB'],
-        'HOST': os.environ['POSTGRES_HOST'],
+        'NAME': os.environ.get('POSTGRES_DB', 'api_limon_sh_db'),
+        'HOST': os.environ.get('POSTGRES_HOST', 'postgresql'),
         'PORT': os.environ.get('POSTGRES_PORT', '5432'),
-        'USER': os.environ['POSTGRES_USER'],
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '')
+        'USER': os.environ.get('POSTGRES_USER', 'user'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'password')
     }
 }
 
