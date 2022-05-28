@@ -1,6 +1,5 @@
 import pytest
 from django.core.exceptions import ValidationError
-from django.template.defaultfilters import slugify
 
 from apps.user.models import User
 
@@ -38,7 +37,7 @@ class TestUserManager:
         {'email': 'email', 'password': None}
     ])
     def test_create_user_without_required_fields(self, data):
-        with pytest.raises(ValueError):
+        with pytest.raises((ValueError, ValidationError)):
             User.objects.create_superuser(**data)
 
     @pytest.mark.parametrize('method,data', [

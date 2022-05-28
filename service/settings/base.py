@@ -1,28 +1,46 @@
 import os
 from datetime import timedelta
 from glob import glob
+from urllib.parse import urljoin
 
+
+DEBUG = True
 
 ROOT_URLCONF = 'api.urls'
 
 AUTH_USER_MODEL = 'user.User'
 
-DEBUG = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'change_me')
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOST', ['*'])
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOST', '*').split(',')
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+USE_TZ = True
+TIME_ZONE = 'UTC'
+
+DATE_FORMAT = '%Y-%m-%d'
+TIME_FORMAT = '%H:%M:%S'
+DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
+
+BACKEND_HOST = os.environ.get('BACKEND_HOST', 'http://localhost:8000')
+FRONTEND_HOST = os.environ.get('FRONTEND_HOST', 'http://localhost:8081')
+FRONTEND_SIGN_IN_URL = urljoin(
+    FRONTEND_HOST, os.environ.get('FRONTEND_SIGN_IN_PATH', '/sign-in')
+)
+FRONTEND_SIGN_UP_URL = urljoin(
+    FRONTEND_HOST, os.environ.get('FRONTEND_SIGN_UP_PATH', '/sign-up')
+)
 
 REDIS_HOST = os.environ.get('REDIS_HOST', 'redis')
 REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
 
-HOST = os.environ.get('HOST', 'http://localhost:8000')
-
-DEFAULT_FILE_STORAGE = "libs.storages.LocalMediaStorage"
-
-CORS_ORIGIN_ALLOW_ALL = True
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+GOOGLE_OAUTH2_CLIENT_ID = os.environ['GOOGLE_OAUTH2_CLIENT_ID']
+GOOGLE_OAUTH2_CLIENT_SECRET = os.environ['GOOGLE_OAUTH2_CLIENT_SECRET']
+GOOGLE_OAUTH2_ACCESS_TOKEN_URL = 'https://oauth2.googleapis.com/token'
+GOOGLE_OAUTH2_USER_INFO_URL = 'https://www.googleapis.com/oauth2/v3/userinfo'
 
 STATIC_DIR = 'static'
 STATIC_URL = f'/{STATIC_DIR}/'
@@ -34,18 +52,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_DIR)
 UPLOAD_AVATARS_TO = 'images/logo/'
 IMAGE_UPLOAD_MAX_SIZE = 5 * 1024 * 1024
 
+DEFAULT_FILE_STORAGE = 'libs.storages.LocalMediaStorage'
+
 ALLOWED_IMAGE_EXTENSIONS = (
     ".jpeg",
     ".jpg",
     ".png"
 )
-
-USE_TZ = True
-TIME_ZONE = 'UTC'
-
-DATE_FORMAT = '%Y-%m-%d'
-TIME_FORMAT = '%H:%M:%S'
-DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 INSTALLED_APPS = [
     # Django apps
@@ -69,7 +82,6 @@ INSTALLED_APPS = [
     'apps.product',
     'apps.machine',
     'apps.cluster'
-
 ]
 
 MIDDLEWARE = [
@@ -120,7 +132,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
