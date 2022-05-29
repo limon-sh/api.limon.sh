@@ -1,31 +1,11 @@
-from urllib.parse import urlencode
+from rest_framework import decorators, permissions
 
-from django.shortcuts import redirect
-from rest_framework import viewsets, decorators, permissions
-
-from apps.auth.google.services import GoogleAuthenticationService
+from api.v1.auth.views import AuthenticationViewSet
+from apps.auth.providers.google import GoogleAuthenticationProvider
 
 
-class GoogleAuthenticationViewSet(viewsets.ViewSet):
-    @decorators.action(
-        detail=False,
-        name='sign-up',
-        methods=['get'],
-        url_path='sign-up',
-        permission_classes=[
-            permissions.AllowAny
-        ]
-    )
-    def sign_up(self, request, *args, **kwargs):
-        """
-        Google sign-up
-
-        Sign up a new user and send confirmation email.
-        """
-
-        token = GoogleAuthenticationService.sign_up(request)
-
-        return redirect(f"http://localhost:8081/sign-up?{urlencode({'token': token})}")
+class GoogleAuthenticationViewSet(AuthenticationViewSet):
+    auth_provider = GoogleAuthenticationProvider
 
     @decorators.action(
         detail=False,
@@ -45,6 +25,22 @@ class GoogleAuthenticationViewSet(viewsets.ViewSet):
         of those credentials.
         """
 
-        token = GoogleAuthenticationService.sign_in(request)
+        return super().sign_in(request, *args, **kwargs)
 
-        return redirect(f'http://localhost:8081/sign-in?access_token={token}')
+    @decorators.action(
+        detail=False,
+        name='sign-up',
+        methods=['get'],
+        url_path='sign-up',
+        permission_classes=[
+            permissions.AllowAny
+        ]
+    )
+    def sign_up(self, request, *args, **kwargs):
+        """
+        Google sign-up
+
+        Sign up a new user and send confirmation email.
+        """
+
+        return super().sign_up(request, *args, **kwargs)

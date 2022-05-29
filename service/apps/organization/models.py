@@ -69,4 +69,3 @@ class OrganizationMember(BaseModel):
         to='user.Member',
         on_delete=models.CASCADE
     )
-

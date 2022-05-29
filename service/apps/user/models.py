@@ -2,7 +2,7 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.template.defaultfilters import slugify
+
 from libs.models import BaseModel, PersonMixin
 
 
@@ -17,6 +17,12 @@ class User(BaseModel, PersonMixin, AbstractBaseUser, PermissionsMixin):
         _('email address'),
         unique=True,
         max_length=128
+    )
+    password = models.CharField(
+        _("password"),
+        max_length=128,
+        null=True,
+        blank=True
     )
     is_active = models.BooleanField(
         _('active status'),
@@ -43,12 +49,12 @@ class User(BaseModel, PersonMixin, AbstractBaseUser, PermissionsMixin):
             if not email:
                 raise ValueError(_('The given email must be set'))
 
-            if not password:
-                raise ValueError(_('The given password must be set'))
-
             email = self.normalize_email(email)
             user = self.model(email=email, **kwargs)
-            user.set_password(password)
+
+            if password is not None:
+                user.set_password(password)
+
             user.save(using=self._db)
 
             return user
