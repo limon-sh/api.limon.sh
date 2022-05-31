@@ -15,4 +15,4 @@ class AuthenticationService:
             return AuthenticationResult(token=provider_method(request))
         except Exception as error:
             # TODO: Make more flexible error message
-            return AuthenticationResult(errors=[str(error)])
+            return AuthenticationResult(errors=str(error))

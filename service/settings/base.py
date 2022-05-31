@@ -26,7 +26,7 @@ TIME_FORMAT = '%H:%M:%S'
 DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
 BACKEND_HOST = os.environ.get('BACKEND_HOST', 'http://localhost:8000')
-FRONTEND_HOST = os.environ.get('FRONTEND_HOST', 'http://localhost:8081')
+FRONTEND_HOST = os.environ.get('FRONTEND_HOST', 'http://localhost:8080')
 FRONTEND_SIGN_IN_URL = urljoin(
     FRONTEND_HOST, os.environ.get('FRONTEND_SIGN_IN_PATH', '/sign-in')
 )
@@ -41,6 +41,8 @@ GOOGLE_OAUTH2_CLIENT_ID = os.environ['GOOGLE_OAUTH2_CLIENT_ID']
 GOOGLE_OAUTH2_CLIENT_SECRET = os.environ['GOOGLE_OAUTH2_CLIENT_SECRET']
 GOOGLE_OAUTH2_ACCESS_TOKEN_URL = 'https://oauth2.googleapis.com/token'
 GOOGLE_OAUTH2_USER_INFO_URL = 'https://www.googleapis.com/oauth2/v3/userinfo'
+
+APPEND_SLASH=False
 
 STATIC_DIR = 'static'
 STATIC_URL = f'/{STATIC_DIR}/'
