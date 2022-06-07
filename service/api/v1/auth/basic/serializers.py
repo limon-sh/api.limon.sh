@@ -1,9 +1,7 @@
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
-from django.db import transaction
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from django.contrib.auth.hashers import make_password
 
 from apps.user.models import User
 
@@ -18,7 +16,6 @@ class BasicSignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-
         fields = (
             'first_name',
             'last_name',
@@ -36,10 +33,6 @@ class BasicSignUpSerializer(serializers.ModelSerializer):
             )
 
         return value
-
-    @transaction.atomic()
-    def create(self, validated_data):
-        return User.objects.create_user(**validated_data)
 
 
 class BasicSignInSerializer(TokenObtainPairSerializer):

@@ -5,7 +5,6 @@ from apps.auth.providers.basic import BasicAuthenticationProvider
 
 
 class BasicAuthenticationViewSet(AuthenticationViewSet):
-
     auth_provider = BasicAuthenticationProvider
 
     @decorators.action(
@@ -18,9 +17,10 @@ class BasicAuthenticationViewSet(AuthenticationViewSet):
         ]
     )
     def sign_up(self, request, *args, **kwargs):
+
         """
         Sign up
-        Sign up a new user and send confirmation email.
+        Sign up a new user.
         """
 
         serializer = BasicSignUpSerializer(data=self.request.data)
@@ -38,6 +38,7 @@ class BasicAuthenticationViewSet(AuthenticationViewSet):
         ]
     )
     def sign_in(self, request, *args, **kwargs):
+
         """
         Sign in
         Takes a set of user credentials and returns an access and
@@ -47,4 +48,5 @@ class BasicAuthenticationViewSet(AuthenticationViewSet):
 
         serializer = BasicSignInSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+
         return super().sign_in(request, *args, **kwargs)
