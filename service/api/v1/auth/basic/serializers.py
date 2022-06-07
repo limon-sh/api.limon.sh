@@ -7,7 +7,6 @@ from apps.user.models import User
 
 
 class BasicSignUpSerializer(serializers.ModelSerializer):
-
     password = serializers.CharField(
         max_length=128,
         min_length=8,
