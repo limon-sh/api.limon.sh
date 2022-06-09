@@ -1,3 +1,6 @@
+from urllib.parse import urlencode
+
+from django.shortcuts import redirect
 from rest_framework import decorators, permissions
 
 from api.v1.auth.views import AuthenticationViewSet
@@ -44,3 +47,7 @@ class GoogleAuthenticationViewSet(AuthenticationViewSet):
         """
 
         return super().sign_up(request, *args, **kwargs)
+
+    @staticmethod
+    def response(url, data):
+        return redirect(f"{url}?{urlencode(data)}")

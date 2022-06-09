@@ -1,5 +1,8 @@
+from django.shortcuts import redirect
 from rest_framework import decorators, permissions
 from api.v1.auth.views import AuthenticationViewSet
+from rest_framework.response import Response
+
 from .serializers import BasicSignUpSerializer, BasicSignInSerializer
 from apps.auth.providers.basic import BasicAuthenticationProvider
 
@@ -10,7 +13,7 @@ class BasicAuthenticationViewSet(AuthenticationViewSet):
     @decorators.action(
         detail=False,
         name='sign-up',
-        methods=['get'],
+        methods=['post'],
         url_path='sign-up',
         permission_classes=[
             permissions.AllowAny
@@ -31,7 +34,7 @@ class BasicAuthenticationViewSet(AuthenticationViewSet):
     @decorators.action(
         detail=False,
         name='sign-in',
-        methods=['get'],
+        methods=['post'],
         url_path='sign-in',
         permission_classes=[
             permissions.AllowAny
@@ -50,3 +53,7 @@ class BasicAuthenticationViewSet(AuthenticationViewSet):
         serializer.is_valid(raise_exception=True)
 
         return super().sign_in(request, *args, **kwargs)
+
+    @staticmethod
+    def response(url, data):
+        return Response(f"{data}")
