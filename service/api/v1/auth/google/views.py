@@ -5,6 +5,7 @@ from rest_framework import decorators, permissions
 
 from api.v1.auth.views import AuthenticationViewSet
 from apps.auth.providers.google import GoogleAuthenticationProvider
+from rest_framework.response import Response
 
 
 class GoogleAuthenticationViewSet(AuthenticationViewSet):
@@ -49,5 +50,5 @@ class GoogleAuthenticationViewSet(AuthenticationViewSet):
         return super().sign_up(request, *args, **kwargs)
 
     @staticmethod
-    def response(url, data):
+    def response(url: str, data: dict) -> Response:
         return redirect(f"{url}?{urlencode(data)}")

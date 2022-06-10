@@ -55,5 +55,5 @@ class BasicAuthenticationViewSet(AuthenticationViewSet):
         return super().sign_in(request, *args, **kwargs)
 
     @staticmethod
-    def response(url, data):
+    def response(url: str, data: dict) -> Response:
         return Response(f"{data}")

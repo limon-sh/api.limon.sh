@@ -32,7 +32,7 @@ class AuthenticationViewSet(viewsets.ViewSet):
                 'refresh_token': result.refresh_token()
             }
 
-        return self.response(FRONTEND_SIGN_UP_URL, data)
+        return self.response(FRONTEND_SIGN_IN_URL, data)
 
     def sign_up(self, request, *args, **kwargs):
         result = self.auth_service.authenticate(
@@ -50,3 +50,6 @@ class AuthenticationViewSet(viewsets.ViewSet):
             }
 
         return self.response(FRONTEND_SIGN_UP_URL, data)
+
+    def response(self, *args, **kwargs):
+        raise NotImplementedError()
