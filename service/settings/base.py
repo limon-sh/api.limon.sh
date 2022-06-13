@@ -10,8 +10,6 @@ ROOT_URLCONF = 'api.urls'
 
 AUTH_USER_MODEL = 'user.User'
 
-CORS_ORIGIN_ALLOW_ALL = True
-
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'change_me')
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOST', '*').split(',')
@@ -33,6 +31,14 @@ FRONTEND_SIGN_IN_URL = urljoin(
 FRONTEND_SIGN_UP_URL = urljoin(
     FRONTEND_HOST, os.environ.get('FRONTEND_SIGN_UP_PATH', '/sign-up')
 )
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOWED_ORIGINS = [
+    BACKEND_HOST,
+    FRONTEND_HOST
+]
 
 REDIS_HOST = os.environ.get('REDIS_HOST', 'redis')
 REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
