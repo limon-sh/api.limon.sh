@@ -45,10 +45,10 @@ services as docker containers:
 
 ```bash
 $ docker-compose up --detach postgresql redis
-$ cd service
-service $ poetry install
-service $ poetry shell
-(api.limon.sh-py) service $ export $(cat ../.env && cat ../.env.local)
+$ poetry install
+$ poetry shell
+(api.limon.sh-py) $ export $(cat .env && cat .env.local)
+(api.limon.sh-py) $ cd service
 (api.limon.sh-py) service $ python3 manage.py runserver
 ```
 

@@ -15,13 +15,14 @@ from settings import (
     FRONTEND_SIGN_IN_URL,
     FRONTEND_SIGN_UP_URL,
     GOOGLE_OAUTH2_CLIENT_ID,
-    GOOGLE_OAUTH2_CLIENT_SECRET,
-    GOOGLE_OAUTH2_ACCESS_TOKEN_URL,
-    GOOGLE_OAUTH2_USER_INFO_URL
+    GOOGLE_OAUTH2_CLIENT_SECRET
 )
 
 
 class GoogleAuthenticationProvider(AuthenticationProvider):
+    GOOGLE_OAUTH2_ACCESS_TOKEN_URL = 'https://oauth2.googleapis.com/token'
+    GOOGLE_OAUTH2_USER_INFO_URL = 'https://www.googleapis.com/oauth2/v3/userinfo'
+
     @classmethod
     def sign_up(cls, request: Request) -> RefreshToken:
         user_info = cls.get_user_info(
@@ -81,7 +82,7 @@ class GoogleAuthenticationProvider(AuthenticationProvider):
             raise ValidationError('Error get Google access token')
 
         response = requests.get(
-            GOOGLE_OAUTH2_USER_INFO_URL,
+            cls.GOOGLE_OAUTH2_USER_INFO_URL,
             params={'access_token': access_token}
         )
 
@@ -90,10 +91,10 @@ class GoogleAuthenticationProvider(AuthenticationProvider):
 
         return response.json()
 
-    @staticmethod
-    def _get_access_token(*, code: str, redirect_uri: str) -> Optional[str]:
+    @classmethod
+    def _get_access_token(cls, *, code: str, redirect_uri: str) -> Optional[str]:
         response = requests.post(
-            GOOGLE_OAUTH2_ACCESS_TOKEN_URL,
+            cls.GOOGLE_OAUTH2_ACCESS_TOKEN_URL,
             data={
                 'code': code,
                 'client_id': GOOGLE_OAUTH2_CLIENT_ID,

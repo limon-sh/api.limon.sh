@@ -11,7 +11,7 @@ RUN groupadd --system ${APP_USER} && \
 
 WORKDIR ${APP_PATH}
 
-COPY --chown=${APP_USER}:${APP_USER} service/ ${APP_PATH}/
+COPY --chown=${APP_USER}:${APP_USER} poetry.lock pyproject.toml service/ ${APP_PATH}/
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
 

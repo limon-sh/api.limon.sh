@@ -74,8 +74,8 @@ class User(BaseModel, PersonMixin, AbstractBaseUser, PermissionsMixin):
         def create_superuser(self, email=None, password=None, **kwargs):
             kwargs.setdefault('is_staff', True)
             kwargs.setdefault('is_superuser', True)
-            kwargs.setdefault('first_name', 'root')
-            kwargs.setdefault('last_name', 'root')
+            kwargs.setdefault('first_name', 'admin')
+            kwargs.setdefault('last_name', 'admin')
 
             if kwargs.get('is_staff') is not True:
                 raise ValueError(_('Superuser must have is_staff=True.'))

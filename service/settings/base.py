@@ -4,27 +4,26 @@ from glob import glob
 from urllib.parse import urljoin
 
 
+# Base django settings
 DEBUG = True
-
+APPEND_SLASH = False
 ROOT_URLCONF = 'api.urls'
-
-AUTH_USER_MODEL = 'user.User'
-
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'change_me')
-
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOST', '*').split(',')
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# l10n and i18n
 USE_TZ = True
 TIME_ZONE = 'UTC'
-
 DATE_FORMAT = '%Y-%m-%d'
 TIME_FORMAT = '%H:%M:%S'
 DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 
+# Auth settings
+AUTH_USER_MODEL = 'user.User'
 BACKEND_HOST = os.environ.get('BACKEND_HOST', 'http://localhost:8000')
 FRONTEND_HOST = os.environ.get('FRONTEND_HOST', 'http://localhost:8080')
+GOOGLE_OAUTH2_CLIENT_ID = os.environ['GOOGLE_OAUTH2_CLIENT_ID']
+GOOGLE_OAUTH2_CLIENT_SECRET = os.environ['GOOGLE_OAUTH2_CLIENT_SECRET']
 FRONTEND_SIGN_IN_URL = urljoin(
     FRONTEND_HOST, os.environ.get('FRONTEND_SIGN_IN_PATH', '/sign-in')
 )
@@ -32,9 +31,9 @@ FRONTEND_SIGN_UP_URL = urljoin(
     FRONTEND_HOST, os.environ.get('FRONTEND_SIGN_UP_PATH', '/sign-up')
 )
 
-
+# CORS settings
 CORS_ORIGIN_ALLOW_ALL = True
-
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOST', '*').split(',')
 CORS_ALLOWED_ORIGINS = [
     BACKEND_HOST,
     FRONTEND_HOST
@@ -43,25 +42,16 @@ CORS_ALLOWED_ORIGINS = [
 REDIS_HOST = os.environ.get('REDIS_HOST', 'redis')
 REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
 
-GOOGLE_OAUTH2_CLIENT_ID = os.environ['GOOGLE_OAUTH2_CLIENT_ID']
-GOOGLE_OAUTH2_CLIENT_SECRET = os.environ['GOOGLE_OAUTH2_CLIENT_SECRET']
-GOOGLE_OAUTH2_ACCESS_TOKEN_URL = 'https://oauth2.googleapis.com/token'
-GOOGLE_OAUTH2_USER_INFO_URL = 'https://www.googleapis.com/oauth2/v3/userinfo'
-
-APPEND_SLASH=False
-
+# Static files
 STATIC_DIR = 'static'
 STATIC_URL = f'/{STATIC_DIR}/'
 STATIC_ROOT = os.path.join(BASE_DIR, STATIC_DIR)
-
 MEDIA_DIR = 'media'
 MEDIA_URL = f'/{MEDIA_DIR}/'
 MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_DIR)
 UPLOAD_AVATARS_TO = 'images/logo/'
 IMAGE_UPLOAD_MAX_SIZE = 5 * 1024 * 1024
-
 DEFAULT_FILE_STORAGE = 'libs.storages.LocalMediaStorage'
-
 ALLOWED_IMAGE_EXTENSIONS = (
     ".jpeg",
     ".jpg",
@@ -104,7 +94,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CONN_MAX_AGE = 60
+CONN_MAX_AGE = 60 * 5
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -113,6 +103,13 @@ DATABASES = {
         'PORT': os.environ.get('POSTGRES_PORT', '5432'),
         'USER': os.environ.get('POSTGRES_USER', 'user'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'password')
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}'
     }
 }
 
@@ -178,12 +175,5 @@ SWAGGER_SETTINGS = {
             'name': 'Authorization',
             'in': 'header'
         }
-    }
-}
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}'
     }
 }
