@@ -6,11 +6,21 @@ from urllib.parse import urljoin
 
 # Base django settings
 DEBUG = True
+<<<<<<< HEAD
 APPEND_SLASH = False
+=======
+>>>>>>> 5b551a9 (Added silk and change poetry files location)
 ROOT_URLCONF = 'api.urls'
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'change_me')
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+<<<<<<< HEAD
+=======
+# CORS settings
+CORS_ORIGIN_ALLOW_ALL = True
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOST', '*').split(',')
+
+>>>>>>> 5b551a9 (Added silk and change poetry files location)
 # l10n and i18n
 USE_TZ = True
 TIME_ZONE = 'UTC'
