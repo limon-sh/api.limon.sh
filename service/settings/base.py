@@ -12,10 +12,6 @@ ROOT_URLCONF = 'api.urls'
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'change_me')
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# CORS settings
-CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOST', '*').split(',')
-
 # l10n and i18n
 USE_TZ = True
 TIME_ZONE = 'UTC'
