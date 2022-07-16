@@ -107,10 +107,16 @@ DATABASES = {
     }
 }
 
+# Cache layer
+AUTHENTICATION_CACHE = 'authentication'
+AUTHENTICATION_CACHE_TIMEOUT = (60 * 60) * 2
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}'
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
+    },
+    AUTHENTICATION_CACHE: {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/0'
     }
 }
 
@@ -138,7 +144,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication',
+        'apps.auth.authentication.JWTAuthenticationCache',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
